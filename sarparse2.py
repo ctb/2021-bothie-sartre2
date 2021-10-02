@@ -43,7 +43,7 @@ def parse_cpu(fp):
     return pandas.DataFrame(x)
 
 
-def parse_disk(fp, target_device='nvme1n1'):
+def parse_disk(fp, device='nvme1n1'):
     line = fp.readline()
     assert line.startswith('Linux ')
 
@@ -62,8 +62,11 @@ def parse_disk(fp, target_device='nvme1n1'):
             assert 0, "unexpected end of file"
 
         tup = line.strip().split()
-        device = tup[1]
-        if device != target_device: # skip reporting on other stuff
+        if not tup:
+            continue
+
+        this_device = tup[1]
+        if this_device != device: # skip reporting on other stuff
             continue
 
         timestr = tup[0]
