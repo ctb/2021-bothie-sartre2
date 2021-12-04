@@ -1,3 +1,4 @@
+name: sar
 channels:
     - conda-forge
     - bioconda
